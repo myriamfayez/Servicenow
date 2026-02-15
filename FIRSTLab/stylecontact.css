@@ -1,0 +1,154 @@
+.nav-left img{
+width: 60px;
+border-radius: 20px;
+margin-left: -1300%;
+margin-top: -25%;
+}
+
+
+.navbar{
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+  background-color: rgb(25, 135, 84);
+display: inline-block;
+display: flex;
+width: 100%;
+height: 8%;
+position: fixed;
+}
+
+.navbar ul{
+  display: flex;
+  justify-content: flex-end;
+gap: 15px;
+list-style: none;
+margin-left: 55%;
+padding-top: 0%;}
+
+
+
+.list a{
+  color: white;
+  text-decoration: none;
+  list-style: none;
+justify-content: flex-end;}
+
+
+
+a:hover{
+color: red;
+}
+
+
+
+.contain{
+
+    width: 75%;
+    height: 100vh;
+    background-color: white;
+    text-align: center;
+    padding: 8%;
+    margin-left: 6%;
+}
+
+.form{
+
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.form input{
+
+    width: 20%;
+    margin-left: 40%;
+    height: 25%;
+}
+
+
+.form input{
+
+    width: 20%;
+    margin-left: 40%;
+    height: 25%;
+}
+
+
+
+
+
+
+button{
+
+    width: 15%;
+    border-radius: 35%;
+    background-color: greenyellow;
+     margin-left: 45%;
+     margin-top: 3%;
+     padding: 1%;
+     border: black;
+}
+
+button:hover{
+
+    transform: scale(1.1);          /* start zoomed in */
+  transition: transform 0.3s ease;
+ 
+}
+
+
+
+.field{
+
+    margin-bottom: 15px;
+margin-left: -80%;
+}
+
+
+.field label{
+
+    display: block;
+    margin-bottom: 6PX;
+}
+ 
+
+
+.field input {
+    margin-right: -4%;
+
+}
+
+
+.field input ,
+.field textarea
+{
+width: 50%;
+padding: 10px;
+border: 1px solid;
+
+border-radius: 4px;
+}
+
+.field textarea{
+
+    height: 120px;
+    resize: none;
+    margin-right: 20%;
+}
+
+
+
+
+.footer{
+  background-color: gray;
+  width: 96%;
+  padding: 2%;
+  text-align: center;
+  margin-top: -1%;
+}
+
+a{
+    text-decoration: none;
+}

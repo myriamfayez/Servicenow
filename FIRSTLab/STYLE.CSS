@@ -1,0 +1,341 @@
+
+.l ul{
+    list-style: none;
+}
+.nav-left img{
+width: 60px;
+border-radius: 20px;
+margin-left: -1100%;
+margin-top: -38%;
+}
+.LOGO{
+    margin-top: 15%;
+}
+ul {
+position: fixed;
+    list-style: none;
+    text-decoration: none;
+    display: inline-block;
+    display: flex;
+    gap: 30px;
+  background-color: rgb(25, 135, 84);
+  width: 98%;
+  height: 20px;
+  justify-content: flex-end;
+ padding: 40;
+ padding-top: 25px;
+ padding-right: 30px;
+ margin-top: -148px;
+ margin-right: 15px;
+ padding-left: 1px;
+ padding-bottom: 20px;
+
+}
+
+
+
+nav a {
+
+    color: white;
+    
+}
+
+
+body{
+
+    background-image: url('franki-chamaki-ivfp_yxZuYQ-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 130vh;
+    margin: 0;
+}
+
+
+
+
+h1{
+/* top: 55%; */
+    TEXT-ALIGN: CENTER;
+  margin-top:10%;
+  color: white;
+}
+ 
+p{
+    TEXT-ALIGN: CENTER;
+  margin-top:1%;
+  color: white;
+}
+
+button{
+background-color: yellow;
+    color: black;
+ padding: 15px;
+    font-size: 16PX;
+    border-radius: 25px;
+    top: 50%;
+    margin-left: 45%;
+  margin-top:3%;
+  border: black;
+
+}
+
+button:hover{
+background-color: white;}
+
+
+H2{
+
+    margin-left: 39%;
+    padding-top: 2%;
+}
+
+.cat{
+
+background-color: lightgoldenrodyellow;
+margin-top: 44%;
+width: 100%;
+height: 60%;
+
+
+}
+
+.one{
+  position: absolute;
+  bottom: -130;   
+  left: 0%;
+    margin-bottom: 25%;
+    background-color: red;
+    height: 53%;
+    width: 25%;
+    display: flex;
+    
+}
+
+
+.one img{
+
+margin: 35%;}
+
+
+.first h5{
+
+    margin-top: 30%;
+}
+
+
+
+
+
+.two{
+margin-top: 2%;
+margin-bottom: 20%;
+margin-left: 35%; /*t3ala mn el left*/
+background-color: pink;
+    height: 69%;
+    width: 25%;
+
+}
+
+
+.three{
+
+    background-color: greenyellow;
+    width:25%;
+    height: 50%;
+    margin-left: 70%;
+    margin-top: -48%;
+    height:69%;
+}
+
+
+
+
+
+
+
+
+.category{
+
+margin-top: 54%;
+
+    width: 100%;
+    height: 100vh;
+    background-color:antiquewhite
+    padding-top 5%;
+}
+
+.category H2{
+    margin-left: 45%;
+    margin-top: 25%;
+}
+/* 
+.contain{
+    padding: 5%;
+    margin-left: 20%;
+
+} */
+
+
+.first{
+    margin-top: -15px;
+    margin-left: 5%;
+   background-color: white;
+    height: 53%;
+    width: 20%;
+    border-radius: 30px;
+
+}
+
+.first img{
+
+    margin: 39%;
+
+}
+
+.first h5{
+    margin-left: 35%;
+    margin-top: -25%;
+}
+
+.first p{
+
+      margin-left: -5%;
+    margin-top: -5%;
+}
+
+
+
+
+.first a{
+margin-left:33% ;
+text-decoration: none;
+}
+
+
+
+a:hover{
+color: red;
+}
+
+
+
+
+.second{
+
+margin-left: 120%;
+margin-top: -90%;
+   background-color: white;
+    height: 95%;
+    width: 95%;
+    border-radius: 30px; 
+
+}
+
+
+
+.second h5{
+   margin-left: 40%; 
+}
+
+
+
+.third{
+
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    margin-left: 120%;
+    margin-top: -103%;
+    border-radius: 30px;
+}
+
+
+
+
+.fourth{
+
+    height: 50vh;
+    width: 100%;
+    background-color: white;
+    margin-left: 115%;
+    margin-top: -100%;
+    border-radius: 30px;
+}
+
+
+
+.footer{
+    width: 100%;
+    height:10vh;
+    background-color: gray;
+}
+
+
+.footer P{
+    text-align: center;
+    padding-top: 25PX;
+}
+
+
+/*.TRY{
+
+width: 30%;
+height: 30%;
+background-color: brown;
+margin: 4%;
+
+
+}*/
+/*
+.PARENT> SPAN:NTH-CHILD(2){
+
+    color: blanchedalmond;
+}
+*/
+
+/*.INSIDE{
+background-color: yellow;
+    width: 80%;
+    height: 50%;
+    padding: 6%;
+    border-radius: 6%;
+    border-color: black;
+    margin-left: 4%;
+}*/
+
+
+
+
+/*
+.PARENT img:hover{
+
+    transform: scaleX(-1);
+    transform: 0.3s;
+} *\
+    
+
+/* t3ala mn el bottom *\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

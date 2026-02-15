@@ -1,0 +1,148 @@
+
+.nav-left img{
+width: 60px;
+border-radius: 20px;
+margin-left: -1300%;
+margin-top: -35%;
+}
+.navbar{
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+  background-color: rgb(25, 135, 84);
+display: inline-block;
+display: flex;
+width: 100%;
+height: 10%;
+}
+
+.navbar ul{
+  display: flex;
+  justify-content: flex-end;
+gap: 15px;
+list-style: none;
+margin-left: 55%;
+padding-top: 1%;}
+
+
+
+.list a{
+  color: white;
+  text-decoration: none;
+  list-style: none;
+justify-content: flex-end;}
+
+
+
+a:hover{
+color: red;
+}
+
+.one{
+    background-color: wheat;
+    height: 15%;
+    width: 60%;
+    border: black;
+}
+
+.one{
+    margin-top: 8%;
+    border-radius: 20px;
+}
+
+.right{
+    padding: 6px;
+    padding-left: 20px;
+}
+.left button{
+    margin-left: 80%;
+    margin-top: -10%;
+    background-color: yellow;
+    padding: 15px;
+    border-radius: 30px;
+    border: black;
+    color: black;
+}
+
+
+
+.two{
+    margin-top: 4%;
+    border-radius: 20px;
+    background-color: wheat;
+    width: 60%;
+}
+
+.rig{
+    padding: 6px;
+    padding-left: 20px;
+}
+.lef button{
+    margin-left: 80%;
+    margin-top: -10%;
+    background-color: yellow;
+    padding: 15px;
+    border-radius: 30px;
+    border: black;
+}
+
+
+
+
+
+.three{
+    margin-top: 4%;
+    border-radius: 20px;
+    background-color: wheat;
+    width: 60%;
+}
+
+.ri{
+    padding: 6px;
+    padding-left: 20px;
+}
+.le button{
+    margin-left: 80%;
+    margin-top: -10%;
+    background-color: yellow;
+    padding: 15px;
+    border-radius: 30px;
+    border: black;
+}
+
+
+.container{
+
+margin-left: 30%;
+margin-top: 10%;
+margin-bottom: 6%;
+}
+
+.container button:hover{
+    background-color: white;
+}
+
+.txt{
+    margin-left: 15%;
+}
+
+.txt p{
+color: #adb5bd;
+margin-left: 2%;}
+
+
+
+
+
+.footer{
+    width: 100%;
+    height:10vh;
+    background-color: gray;
+    margin-bottom: -3%;
+}
+
+
+.footer P{
+    text-align: center;
+    padding-top: 25PX;
+}

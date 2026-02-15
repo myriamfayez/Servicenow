@@ -1,0 +1,202 @@
+.nav-left img{
+width: 60px;
+border-radius: 20px;
+margin-left: -1300%;
+margin-top: -35%;
+}
+.navbar{
+    display: inline-block;
+    display: flex;
+    flex-direction: row;
+  background-color: rgb(25, 135, 84);
+display: inline-block;
+display: flex;
+width: 100%;
+height: 10%;
+}
+
+.navbar ul{
+  display: flex;
+  justify-content: flex-end;
+gap: 15px;
+list-style: none;
+margin-left: 55%;
+padding-top: 1%;}
+
+
+
+.list a{
+  color: white;
+  text-decoration: none;
+  list-style: none;
+justify-content: flex-end;}
+
+
+
+a:hover{
+color: red;
+}
+
+
+.txt {
+    margin-left: 35%;
+}
+.txt p{
+
+    margin-left: 2%;
+
+}
+
+.left{
+
+    background-color: green;
+    width: 80px;
+    height: 130px;
+        margin-top: 19%;
+        border-radius: 6px;
+        
+   }
+
+
+.one{
+margin-left: 10%;
+padding-top: 6%;
+margin-top: -10%;
+}
+
+
+
+.left h5{
+
+    padding: 30px;
+    color: white;
+}
+
+
+.right{
+    background-color: white;
+    width: 25%;
+    margin-left: 6%;
+    margin-top: -10%;
+    color: black;
+    padding-left: 6px;
+    border: dotted black;
+    padding-bottom: 5px;
+}
+
+.right button{
+
+    padding: 6px;
+    border: black dotted;
+    color: green;
+    margin-left: 3%;
+
+}
+.right button:hover{
+    color: black;
+}
+
+
+
+
+
+.two{
+    margin-left: 40%;
+    margin-top: -11%;
+
+}
+
+.rig{
+        margin-top: -18%;
+background-color: white;
+    margin-left: 10%;
+    height: 18%;
+    padding-left: 6px;
+    width: 45%;
+    padding-top: 8px ;
+    border: black dotted;
+}
+
+
+
+.lef {
+    padding: 8px;
+    margin-top: 2%;
+    background-color: orange;
+    width: 8%;
+    height: 17%;
+    border-radius: 6px;
+}
+
+
+
+.lef h5{
+
+    padding-left: 10px;
+color: white;}
+
+.rig button{
+
+    padding: 6px;
+    border: black dotted;
+    color: orange;
+    margin-left: 3%;
+    
+
+}
+.rig button:hover{
+    color: black;
+}
+
+
+
+.down{
+    width: 29%;
+    height: 30%;
+    margin-left: 10%;
+}
+
+
+.down h5{
+    padding-left: 9px;
+}
+.le{
+    background-color: blue;
+    width: 17%;
+    height: 57%;
+    padding: 6px;
+    padding-left: 5px;
+    color: white;
+    border-radius: 10px;
+}
+
+
+.ri{
+    background-color: white;
+    margin-left: 19.5%;
+    margin-top: -32%;
+    height: 59%;
+    padding-top: 6px;
+    border: black dotted;
+    padding-left: 6px;
+
+}
+
+.ri button{
+    padding: 6px;
+    border: black dotted;
+    color: blue;
+    margin-left: 3%;
+
+}
+.ri button:hover{
+    color: black;
+}
+
+.footer{
+  background-color: gray;
+  width: 96%;
+  padding: 2%;
+  text-align: center;
+  margin-top: 20%;
+}
