@@ -1,0 +1,317 @@
+<html>
+    <head>
+
+    </head>
+
+
+
+
+    <body>
+        
+
+
+
+
+
+        <script>
+
+
+
+
+
+let library = [];
+
+library.push({
+
+    
+  title: "taha hussien",
+  author: "taha",
+  available: 5,
+  borrowed: 0,
+  borrowCount: 0
+});
+
+function findbook(title) {
+
+
+  return library.find(
+
+             book => book.title.toLowerCase() === title.toLowerCase()
+  );
+}
+
+                   function addBook() {
+                let title = prompt("book title");
+
+  if (!title) {
+
+
+    alert("title  empty");
+
+    return;
+  }
+
+  let author = prompt("author name");
+
+       let copies = Number(prompt("no of copies"));
+
+  if (copies <= 0 || isNaN(copies)) {
+
+
+            alert("more than 0 copies");
+    return;
+  }
+
+  let existing = findBook(title);
+
+  if (existing) {
+
+    existing.available += copies;
+
+
+    alert("book exist");
+  } else {
+                 library.push({
+
+      title: title,
+
+ author: author,
+      available: copies,
+
+          borrowed: 0,
+      borrowCount: 0
+    });
+
+
+    alert("book added");
+  } 
+}
+
+
+
+
+
+function borrowBook() {
+
+
+  let title = prompt("book u want to borrow");
+
+
+        let book = findBook(title);
+
+  if (!book) {
+
+    alert("not found");
+
+    return;
+  }
+
+  if (book.available === 0) {
+
+
+         alert("no  copy");
+    return;
+  }
+
+  book.available--;
+
+        book.borrowed++;
+
+    book.borrowCount++;
+
+  alert("book borrowed");
+}
+
+
+
+
+function returnBook() {
+
+  let title = prompt(" book u want return");
+
+
+        
+  let book = findBook(title);
+
+
+  if (!book) {
+
+
+    alert("not found");
+
+
+    return;
+  }
+
+  if (book.borrowed === 0) {
+   
+   
+    alert("no copy to return");
+    return;
+  }
+
+          book.borrowed--;
+
+  book.available++;
+
+
+  alert("returned");
+}
+
+
+
+
+
+
+
+function calculateTotalBooks() {
+    
+     let totalAvailable = 0;
+
+
+             let totalBorrowed = 0;
+
+  for (let book of library) {
+
+
+
+         totalAvailable += book.available;
+
+
+    totalBorrowed += book.borrowed;
+  }
+
+         
+  
+  
+  return { totalAvailable, totalBorrowed };
+}
+
+
+
+
+
+
+
+
+
+
+
+function showReport() {
+      
+    if (library.length === 0) {
+
+            alert("lib empty");
+
+
+    return;
+  }
+
+  let report = "library Report\n\n";
+
+  for (let book of library) {
+
+
+
+           let status = "";
+
+        if (book.available > 2) status = "available";
+
+
+    else if (book.available >= 1) status = "limited";
+    else status = "Out of Stock";
+
+    report += `
+Title: ${book.title}
+
+Author: ${book.author}
+
+Available: ${book.available}
+
+   Borrowed: ${book.borrowed}
+Status: ${status}
+Borrowed Times: ${book.borrowCount}
+`;
+  }
+
+  let totals = calculateTotalBooks();
+
+          report += `\navailable: ${totals.totalAvailable}`;
+
+
+
+  report += `\ntotal borrowed: ${totals.totalBorrowed}`;
+
+
+  alert(report);
+}
+
+
+
+
+
+
+
+
+
+
+function startLibrary() {
+  let choice;
+
+  do {
+    choice = prompt(`
+1 add book
+2  borrow book
+3  returm
+4  report library
+5  done
+`);
+
+    switch (choice) {
+      case "1":
+     
+     
+      addBook();
+              break;
+      case "2":
+
+
+
+
+        borrowBook();
+        break;
+
+
+      case "3":
+              returnBook();  break;
+
+
+      case "4":
+                  showReport();
+        break;
+
+
+
+      case "5":
+               alert("done");
+                           break;
+
+
+
+      default:
+
+
+
+        alert("invalid");
+    }
+
+  } while (choice !== "5");
+}
+
+
+
+startLibrary();
+
+        </script>
+    </body>
+</html>

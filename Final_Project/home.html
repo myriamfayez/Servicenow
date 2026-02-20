@@ -1,0 +1,30 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <h1>HOMEEE</h1>
+
+
+
+
+
+
+
+
+    <script>
+    fetch("navbar.html")
+    .then (res=> res.text())
+    .then (html =>{
+document.getElementById("navbar").innerHTML=html
+
+    })
+</script>
+</body>
+
+
+
+</html>
