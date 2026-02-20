@@ -92,7 +92,7 @@ data.forEach (product=>{
     products.innerHTML += `
 <div class="col-md-4 mb-4">
         
-        <div class="card h-100">
+        <div class="card h-100" onclick="gotoproduct(${product.id})">
 <img src="${product.image_url}" class="card-img-top" style="height:600px ;object-fit:cover;">
 <div class="card-body d-flex justify-content-center align-items-center">
 <h5 class="card-title">${product.title}</h5>
@@ -234,7 +234,14 @@ localStorage.setItem("cart",JSON.stringify(cartlist))
 
 
 
+// related b view product details
+//b store id el product el hdos 3lih 
 
+function gotoproduct(productid){
+
+    localStorage.setItem("selectedproductid",productid)
+    window.location.href="view.html"
+}
 
 
 
