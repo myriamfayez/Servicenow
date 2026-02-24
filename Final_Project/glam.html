@@ -1,0 +1,381 @@
+<html>
+    <head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<style>
+.fav{
+
+    color: black;
+}
+
+
+.fav:hover{
+
+    color: red;
+}
+
+
+
+.icons{
+
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.cart:hover{
+    color: red;
+}
+
+
+/* .card:hover{filter: brightness(1.1);} */
+
+ /* img {
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+}
+
+.card {
+  position: relative;
+}
+
+.card img {
+  position: relative;
+  z-index: 1;
+}
+
+.icons {
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.card {
+  overflow: hidden;
+}
+.card-body,
+.price {
+  pointer-events: none;
+} */
+</style>
+    </head>
+    <body>
+        
+<div id="navbar"></div>
+
+
+<div class="container my-5 mt-5 pt-5">
+
+
+    <div class="row" id="products"></div>
+
+    <div id="msg"></div>
+
+</div>
+
+
+
+<div id="qty-glam"></div>
+
+
+
+
+        <div id="footer" class="pt-3 mt-5"></div>
+
+
+
+        <script>
+
+
+const supabaseclient=supabase.createClient('https://eyenvepjdscszapilzdi.supabase.co'// crcli fun ghza bt3ml coonnection m3 el database w da 3enwan mshro3i
+    ,'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5ZW52ZXBqZHNjc3phcGlsemRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNTMzMTEsImV4cCI6MjA4NjkyOTMxMX0.UIjUXMi3VSEX6zBOpoasYCWHslSGADmyPMkQA0bQ4F4')
+
+
+
+    let allProducts = []; 
+
+async function getproducts(){
+
+
+const msg=document.getElementById("msg")
+const products=document.getElementById("products")
+
+
+
+const {data,error}= await supabaseclient
+.from ("products")
+.select("*")
+
+
+
+if (error){
+msg.innerText=error.message
+return; // w2f el function w mtkmlsh 
+}
+
+ allProducts = data; 
+
+      products.innerHTML = ""; 
+      // bnfdy el div mn ay haga 
+
+data.forEach (product=>{ 
+    //hylf 3ala kol row w smnah product // ` fydtha btsm7li a7ot variables gowa el html tags 
+
+    products.innerHTML += `
+<div class="col-md-4 mb-4">
+        
+        <div class="card h-100">
+<img  onclick="gotoproduct(${product.id})"  src="${product.image_url}" class="card-img-top" style="height:600px ;object-fit:cover;">
+<div class="card-body d-flex justify-content-center align-items-center">
+<h5 class="card-title">${product.title}</h5>
+        </div>
+        <div class="price d-flex justify-content-center align-items-center pt-0"><h6>${product.price}</h6></div>
+
+
+        <div class="p-3 icons">
+<i
+id="heart-${product.id}"
+class="fa-regular fa-heart fa-1x fav" 
+onclick='clickheart(${(product.id)},this)'></i>
+
+<i class="fa-solid fa-1x fa-cart-arrow-down cart"
+onclick='addToCartFromGlam(${product.id})'></i>
+</div>
+
+
+
+<div class="d-flex justify-content-center align-items-center gap-2 mb-3">
+<button class="btn btn-outline-secondary btn-sm"
+  onclick="clickheart(${product.id}, this); decQtyOnGlam(${product.id})">
+  −
+</button>  <span id="qty-glam-${product.id}">1</span>
+  <button class="btn btn-outline-secondary btn-sm" onclick="incQtyOnGlam(${product.id})">+</button>
+</div>
+        </div>
+        </div>
+        `;
+        
+})
+
+
+
+
+
+markFavorites();
+
+
+}
+ 
+getproducts()
+
+
+
+
+// <button class="rounded-4">ADD TO FAVOURITES</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function clickheart(productId, icon) {
+  let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+  favlist = favlist.filter(item => item && item.id);
+
+  let product = allProducts.find(p => p.id === productId);
+  if (!product) return;
+
+  let index = favlist.findIndex(item => item.id === productId);
+
+  if (index === -1) {
+    favlist.push(product);
+    icon.classList.remove("fa-regular");
+    icon.classList.add("fa-solid");
+    icon.style.color = "red";
+  } else {
+    favlist.splice(index, 1);
+    icon.classList.remove("fa-solid");
+    icon.classList.add("fa-regular");
+    icon.style.color = "";
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favlist));
+
+  updateLikesCounter();   
+}
+
+
+
+
+
+function markFavorites() {
+  let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+  favlist = favlist.filter(item => item && item.id);
+
+  favlist.forEach(item => {
+    const heart = document.getElementById("heart-" + item.id);
+    if (heart) {
+      heart.classList.remove("fa-regular");
+      heart.classList.add("fa-solid");
+      heart.style.color = "red";
+    }
+  });
+}
+
+    
+
+
+ 
+
+// hngib ay haga stored fl cat abl keda aw lw fadia
+
+
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existing = cart.find(p => p.id === product.id);
+
+  if (existing) {
+    existing.qty += product.qty; 
+  } else {
+    cart.push({ ...product, qty: product.qty || 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to cart");
+}
+
+function incQtyOnGlam(id) {
+  const el = document.getElementById("qty-glam-" + id);}
+
+
+
+
+
+
+  function decQtyOnGlam(id) {
+  const el = document.getElementById("qty-glam-" + id);}
+
+
+
+// related b view product details
+//b store id el product el hdos 3lih 
+
+function gotoproduct(productid){
+
+    localStorage.setItem("selectedproductid",productid)
+    window.location.href="view.html"
+}
+
+
+
+
+
+
+
+function addToCartFromGlam(id) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let product = allProducts.find(p => p.id === id);
+  if (!product) return;
+
+  let qty = Number(document.getElementById("qty-glam-" + id).innerText);
+
+  let existing = cart.find(p => p.id === id);
+
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ ...product, qty: qty });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("Added to cart");
+}
+
+
+
+
+
+
+
+
+function incQtyOnGlam(id) {
+  const el = document.getElementById("qty-glam-" + id);
+  if (!el) return;
+
+  let val = Number(el.innerText);
+  if (val < 5) {        
+    el.innerText = val + 1;
+  }
+}
+
+function decQtyOnGlam(id) {
+  const el = document.getElementById("qty-glam-" + id);
+  if (!el) return;
+
+  let val = Number(el.innerText);
+  if (val > 1) {        
+    el.innerText = val - 1;
+  }
+}
+
+
+
+
+
+
+
+
+//counter ll likes
+
+function updateLikesCounter() {
+  let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+  favlist = favlist.filter(item => item && item.id);
+
+  const el = document.getElementById("likes-counter");
+  if (el) el.innerText = favlist.length;
+}
+
+
+// call navbar
+fetch("navbar.html")
+.then (res=>res.text())
+.then(html=>{
+    document.getElementById("navbar").innerHTML=html
+        updateLikesCounter();  
+
+})
+
+
+
+ //call footer
+  fetch("footer.html")
+.then(res=>res.text())
+.then(html=>{
+document.getElementById("footer").innerHTML=html
+
+})
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   updateCounters();
+// });
+
+        </script>
+    </body>
+</html>

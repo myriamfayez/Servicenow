@@ -1,0 +1,159 @@
+<html>
+  <head>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-..."
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+      .btn {
+        background-color: #d6cbc8 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="navbar"></div>
+
+    <div class="container mt-5 pt-5">
+      <div class="d-flex justify-content-center align-items-center">
+        <h1>Cart <i class="fa-solid fa-cart-arrow-down"></i></h1>
+      </div>
+      <div class="row" id="cart"></div>
+      <div class="row">
+        <div class="col-12 text-center mt-4">
+          <h3>Total: <span id="total-price">0</span>LE</h3>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="rounded-3 d-flex justify-content-center align-items-center mb-5"
+    >
+      <a href="checkout.html" class="btn">Go to CheckOut</a>
+    </div>
+
+    <script>
+      
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartdiv = document.getElementById("cart");
+const totalSpan = document.getElementById("total-price");
+
+const MAX_QTY = 5;
+const MIN_QTY = 1;
+
+function renderCart() {
+  cartdiv.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((product) => {
+    let priceNumber = parseFloat(product.price.replace("LE", ""));
+    let qty = product.qty || 1;
+
+    total += priceNumber * qty;
+
+    cartdiv.innerHTML += `
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="${product.image_url}" class="card-img-top" style="height:600px; object-fit:cover">
+          <div class="card-body text-center">
+            <h5>${product.title}</h5>
+            <div>${product.price}</div>
+
+            <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
+              <button class="btn btn-sm" onclick="decreaseQty(${product.id})">-</button>
+              <span id="qty-${product.id}">${qty}</span>
+              <button class="btn btn-sm" onclick="increaseQty(${product.id})">+</button>
+            </div>
+
+            <button class="btn btn-danger btn-sm mt-2" onclick="removeFromCart(${product.id})">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  totalSpan.innerText = total.toFixed(2);
+}
+
+
+
+
+  function increaseQty(id) {
+  let item = cart.find(p => p.id === id);
+  if (!item) return;
+
+  if ((item.qty || 1) < MAX_QTY) {
+    item.qty = (item.qty || 1) + 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+}
+
+function decreaseQty(id) {
+  let item = cart.find(p => p.id === id);
+  if (!item) return;
+
+  if ((item.qty || 1) > MIN_QTY) {
+    item.qty--;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(p => p.id !== id);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+renderCart();
+
+
+
+
+
+
+
+      
+      // call navbar
+      fetch("navbar.html")
+        .then((res) => res.text())
+        .then((html) => {
+          document.getElementById("navbar").innerHTML = html;
+              updateLikesCounter(); 
+
+        });
+
+
+
+
+        function updateLikesCounter() {
+  let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+  favlist = favlist.filter(item => item && item.id);
+
+  const counter = document.getElementById("likes-counter");
+  if (counter) {
+    counter.innerText = favlist.length;
+  }
+}
+        
+    </script>
+  </body>
+</html>

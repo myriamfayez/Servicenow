@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core">
+
+
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+<body>
+
+<h1>Hello</h1>
+
+
+
+<!-- to define variable in jelly -->
+<!-- <j:set var="name" value ="Myriam">
+</j:set> -->
+
+<!-- choose when condition kol mara w once et722 msh bykmel(if w else if )
+switch case one condition mara wahda fo2 w n compare value -->
+
+<!-- if conditions  -->
+    <!-- <j:set var="var_name" value="Myriam" >
+</j:set>
+
+    <j:choose>
+        <j:when test="${var_name eq 'Richa'}">
+            <p>Welcome, Richa</p>
+        </j:when>
+
+        <j:when test="${var_name eq 'Myriam'}">
+            <p>Welcome Myriam!!!</p>
+        </j:when>
+
+        <j:otherwise>
+            <p>Welcome, ${var_name}</p>
+        </j:otherwise>
+    </j:choose>
+ -->
+
+
+
+
+
+
+
+<!-- array in jelly bs by3rdo as string-->
+<!-- 
+
+<j:set var="arr" value="Myriam,sally,gina">
+</j:set>
+
+
+<j:forEach var="arr_item" items="${arr}">
+<p>${arr_item}</p>
+
+</j:forEach> -->
+
+
+
+<!-- hena el array begd w 3mlna for loop 3lih -->
+
+<!-- <j:new className="java.util.ArrayList" var="names"/>
+
+
+
+
+<j:invoke on="${names}" method="add">
+<j:arg value="Alice"/>
+</j:invoke>
+
+
+
+
+<j:invoke on="${names}" method="add">
+<j:arg value="Myriam"/>
+</j:invoke>
+
+
+
+<j:invoke on="${names}" method="add">
+<j:arg value="Adam"/>
+</j:invoke>
+
+
+
+
+
+
+<j:invoke on="${names}" method="add">
+<j:arg value="Farida"/>
+</j:invoke>
+
+
+
+
+
+ <j:forEach var="currentName"
+items="${names}">
+<h1>Name: ${currentName}</h1>
+
+ 
+
+
+<table class="table table-bordered w-50 mx-auto">
+  <thead>
+      <tr> <th>Name</th></tr>
+  </thead>
+
+<tbody>
+  <j:forEach var="currentName" items="${names}">
+    <tr>
+      <td>${currentName}</td>
+    </tr>
+  </j:forEach>
+</tbody>
+
+
+</table> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+ <j:new className="java.util.Date" var="now" />
+    Current date/time: ${now}<br/>
+
+    <j:new className="java.text.SimpleDateFormat" var="formatter">
+        <j:arg value="yyyy-MM-dd HH:mm:ss" />
+    </j:new>
+
+    <j:invoke on="${formatter}" method="format" var="formattedDate">
+        <j:arg value="${now}" />
+    </j:invoke>
+
+    Formatted date: ${formattedDate}
+
+    <br/><br/>
+
+    <j:new className="java.text.SimpleDateFormat" var="formatterTime">
+        <j:arg value="HH:mm" />
+    </j:new>
+
+    <j:invoke on="${formatterTime}" method="format" var="formattedTime">
+        <j:arg value="${now}" />
+    </j:invoke>
+
+    Formatted time: ${formattedTime} -->
+
+
+
+
+
+
+<!-- <j:set var="year" value="2022"/>
+<j:set var="month" value="May"/>
+<j:set var="day" value="20"/>
+<j:set var="Hour" value="2"/>
+<j:set var="min" value="20"/>
+<j:set var="second" value="16"/>
+<j:set var="datestring" value="${year}-${month}-${day}-${Hour}:${min}:${second}"/>
+
+date ${datestring}
+ -->
+
+
+
+
+
+
+
+
+
+
+
+    <j:new className="java.text.SimpleDateFormat" var="dateTimeFormatter">
+        <j:arg value="yyyy-MM-dd HH:mm:ss" />
+    </j:new>
+
+<!-- a5dt string w 7wlto date -->
+    <j:invoke on="${dateTimeFormatter}" method="parse" var="customDate">
+        <j:arg value="2024-01-01 15:30:00" /> 
+    </j:invoke>
+
+
+<!-- mn  date l date b format mo3yana -->
+    <j:invoke on="${dateTimeFormatter}" method="format" var="formattedTime">
+        <j:arg value="${customDate}" />
+    </j:invoke>
+
+    Formatted DateTime: ${formattedTime}
+
+
+
+
+<!-- h3mel variable w hndh builtin function random -->
+
+<!-- b3d keda hndah el method bta3et el java tt3ml 3al var el 3mlto w a7oto f var gdid -->
+
+
+
+
+
+<j:new className="java.util.Random" var="rand" />
+
+<j:invoke on="${rand}" method="nextInt" var="randnum">
+    <j:arg type ="int" value="100"/>
+</j:invoke>
+
+RandomNumber: ${randnum}
+</body>
+</html>
+</j:jelly>

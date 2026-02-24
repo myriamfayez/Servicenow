@@ -1,0 +1,189 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+<style>
+    .footer{
+        margin-bottom: 90%;
+    }
+</style>
+
+</head>
+
+<body class="mt-5 my-5 pt-5">
+    
+<div id="navbar"></div>
+
+
+<div class="container pt-5">
+   <div class="d-flex justify-content-center align-items-center mb-3"><h2>Favorites <i class="fa-solid fa-heart"></i></h2></div> 
+<div class="row" id="favorites"></div>
+
+</div>
+
+
+
+<div id="likes-counter"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+  const MAX_QTY = 5;
+  const MIN_QTY = 1;
+
+  function saveFavQty(id, qty) {
+    let favQty = JSON.parse(localStorage.getItem("favQty")) || {};
+    favQty[id] = qty;
+    localStorage.setItem("favQty", JSON.stringify(favQty));
+  }
+
+  function getFavQty(id) {
+    let favQty = JSON.parse(localStorage.getItem("favQty")) || {};
+    return favQty[id] || 1;
+  }
+
+  function renderFavorites() {
+    let getfav = JSON.parse(localStorage.getItem("favorites")) || [];
+    getfav = getfav.filter(item => item && item.id);
+
+    const favoritesdiv = document.getElementById("favorites");
+    favoritesdiv.innerHTML = "";
+
+    if (getfav.length === 0) {
+      favoritesdiv.innerHTML = `<p class="text-center">No favorites yet</p>`;
+      return;
+    }
+
+    getfav.forEach(product => {
+      const qty = getFavQty(product.id);
+
+      favoritesdiv.innerHTML += `
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="${product.image_url}" class="card-img-top" style="height:600px; object-fit:cover">
+
+            <div class="p-3 icons d-flex justify-content-between">
+              <i
+                id="heart-${product.id}"
+                class="fa-solid fa-heart fav"
+                onclick="removeFromFav(${product.id})">
+              </i>
+
+              <i
+                class="fa-solid fa-cart-arrow-down cart"
+                onclick="addToCartFromFav(${product.id})">
+              </i>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
+              <button class="btn btn-outline-secondary btn-sm" onclick="decQtyOnFav(${product.id})">−</button>
+              <span id="qty-fav-${product.id}">${qty}</span>
+              <button class="btn btn-outline-secondary btn-sm" onclick="incQtyOnFav(${product.id})">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function incQtyOnFav(id) {
+    const el = document.getElementById("qty-fav-" + id);
+    let val = Number(el.innerText);
+
+    if (val < MAX_QTY) {
+      val++;
+      el.innerText = val;
+      saveFavQty(id, val);
+    }
+  }
+
+  function decQtyOnFav(id) {
+    const el = document.getElementById("qty-fav-" + id);
+    let val = Number(el.innerText);
+
+    if (val > MIN_QTY) {
+      val--;
+      el.innerText = val;
+      saveFavQty(id, val);
+    }
+  }
+
+  function removeFromFav(id) {
+    let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+    favlist = favlist.filter(item => item.id !== id);
+    localStorage.setItem("favorites", JSON.stringify(favlist));
+
+    updateLikesCounter();
+    renderFavorites();
+  }
+
+  function addToCartFromFav(id) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favQty = JSON.parse(localStorage.getItem("favQty")) || {};
+
+    let product = favlist.find(p => p.id === id);
+    if (!product) return;
+
+    let qty = favQty[id] || 1;
+
+    let existing = cart.find(p => p.id === id);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      cart.push({ ...product, qty });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Added to cart");
+  }
+
+  function updateLikesCounter() {
+    let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+    favlist = favlist.filter(item => item && item.id);
+
+    const counter = document.getElementById("likes-counter");
+    if (counter) counter.innerText = favlist.length;
+  }
+
+  // navbar
+  fetch("navbar.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("navbar").innerHTML = html;
+      updateLikesCounter();
+    });
+
+  // footer
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer").innerHTML = html;
+    });
+
+  renderFavorites();
+
+
+
+
+</script>
+
+
+<div id="footer" class="footer mt-5 mb-0"></div>
+
+</body>
+
+</html>

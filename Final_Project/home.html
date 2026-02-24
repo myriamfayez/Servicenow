@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Our Faries</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+  <body>
+    <style>
+      .carousel-item {
+        height: 32rem;
+        background-color: #777;
+        color: aliceblue;
+        position: relative;
+      }
+      .carousel-caption-custom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding-bottom: 50px;
+      }
+      /* Categories Section */
+
+      .category-card {
+        position: relative;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.4s ease;
+      }
+
+      .category-card:hover {
+        transform: scale(1.03);
+      }
+
+      .category-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.1s ease;
+      }
+
+      .category-card:hover .category-overlay {
+        opacity: 1;
+      }
+
+      .category-title {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    </style>
+    <div id="navbar"></div>
+    <section>
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="carousel"
+        data-bs-interval="2000"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div
+            class="carousel-item active"
+            style="background-image: url(&quot;imgs/background1.jpg&quot;)"
+          >
+            <div class="carousel-caption-custom container">
+              <h1>Our Faries</h1>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae,
+                officia.
+              </p>
+            </div>
+          </div>
+          <div
+            class="carousel-item"
+            style="background-image: url(&quot;imgs/background2.jpg&quot;)"
+          ></div>
+          <div
+            class="carousel-item"
+            style="background-image: url(&quot;imgs/background3.jpg&quot;)"
+          ></div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+  
+    <section class="py-5">
+      <div class="container">
+        <h2 class="text-center mb-5 fw-bold">Shop By Category</h2>
+
+        <div class="row g-4">
+          <!-- Dress -->
+          <div class="col-md-4">
+            <a href="category.html?type=skirts" class="text-decoration-none"></a>
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/dresses.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Dresses</div>
+              </div>
+            </div>
+          </a>
+          </div>
+
+          <!-- Skirt -->
+          <div class="col-md-4">
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/skirts.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Skirt</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pants -->
+          <div class="col-md-4">
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/pants.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Pants</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shirt -->
+          <div class="col-md-4">
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/shirt.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Shirt</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Knit Wear -->
+          <div class="col-md-4">
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/knitwear.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Knit Wear</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blouse -->
+          <div class="col-md-4">
+            <div
+              class="category-card shadow"
+              style="background-image: url(imgs/blouse.jpg)"
+            >
+              <div class="category-overlay">
+                <div class="category-title">Blouses</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="footer-container"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      fetch("navbar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("navbar").innerHTML = data;
+              updateLikesCounter(); 
+        });
+
+
+      fetch("footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-container").innerHTML = data;
+        });
+
+function updateLikesCounter() {
+  let favlist = JSON.parse(localStorage.getItem("favorites")) || [];
+  favlist = favlist.filter(item => item && item.id);
+
+  const counter = document.getElementById("likes-counter");
+  if (counter) {
+    counter.innerText = favlist.length;
+  }
+}
+    </script>
+  </body>
+</html>
+
+
+
+
