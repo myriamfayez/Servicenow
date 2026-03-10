@@ -1,0 +1,22 @@
+<h3>Users List</h3>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="user in users">
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>
+                <a href="#!/users/{{user.id}}" class="btn btn-success btn-sm">
+                    View Details
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
