@@ -1,0 +1,92 @@
+<div class="container mt-4" ng-controller="productFormController">
+
+<h3>{{product.id ? "Edit Product" : "Add Product"}}</h3>
+
+<form name="productForm" novalidate ng-submit="saveProduct(productForm.$valid)">
+
+<div class="mb-3">
+<input class="form-control"
+name="name"
+placeholder="Name"
+ng-model="product.name"
+required
+ng-class="{'is-invalid': productForm.$submitted && productForm.name.$invalid}">
+<div class="invalid-feedback">Name is required.</div>
+</div>
+
+<div class="mb-3">
+<input type="number"
+class="form-control"
+name="price"
+placeholder="Price"
+ng-model="product.price"
+required
+ng-class="{'is-invalid': productForm.$submitted && productForm.price.$invalid}">
+<div class="invalid-feedback">Valid price is required.</div>
+</div>
+
+<div class="mb-3">
+<input type="url"
+class="form-control"
+name="img"
+placeholder="Image URL"
+ng-model="product.img"
+required
+ng-class="{'is-invalid': productForm.$submitted && productForm.img.$invalid}">
+<div class="invalid-feedback">Valid image URL is required.</div>
+</div>
+
+<div class="mb-3">
+<input type="number"
+class="form-control"
+name="stock"
+placeholder="Stock"
+ng-model="product.stock"
+required
+ng-class="{'is-invalid': productForm.$submitted && productForm.stock.$invalid}">
+<div class="invalid-feedback">Valid stock number is required.</div>
+</div>
+
+<div class="mb-3">
+<select class="form-control"
+name="category"
+ng-model="product.category"
+required
+ng-class="{'is-invalid': productForm.$submitted && productForm.category.$invalid}">
+<option value="">Select Category</option>
+<option value="beauty">Beauty</option>
+<option value="medication">Medication</option>
+<option value="vitamins">Vitamins</option>
+</select>
+<div class="invalid-feedback">Please select a category.</div>
+</div>
+
+<button type="submit"
+class="btn btn-success"
+ng-disabled="isSaving">
+<span ng-if="isSaving" class="spinner-border spinner-border-sm me-2"></span>
+{{isSaving ? 'Saving...' : 'Save'}}
+</button>
+
+<button type="button"
+class="btn btn-secondary ms-2"
+ng-click="cancel()"
+ng-disabled="isSaving">
+Cancel
+</button>
+
+</form>
+
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="fa-solid fa-circle-check me-2"></i>Product saved successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+</div>

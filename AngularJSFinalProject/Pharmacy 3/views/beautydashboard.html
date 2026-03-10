@@ -1,0 +1,86 @@
+<div class="container mt-4" ng-controller="beautyDashboardController">
+
+<h3 class="mb-4">Products Dashboard</h3>
+
+<div class="d-flex justify-content-between mb-3 align-items-center">
+  <button class="btn btn-primary" ng-click="goToAdd()">
+    <i class="fa-solid fa-plus me-1"></i> Add Product
+  </button>
+  
+  <button class="btn btn-danger" ng-if="hasSelected()" ng-click="deleteSelected()">
+    <i class="fa-solid fa-trash me-1"></i> Delete Selected
+  </button>
+</div>
+
+<div class="row justify-content-center mt-3 mb-4">
+  <div class="col-md-6">
+    <input class="form-control" type="search" placeholder="Search products..." ng-model="searchText" style="border-radius:20px;">
+  </div>
+</div>
+
+<div ng-if="loading" class="text-center py-5">
+  <div class="spinner-border text-primary" role="status"></div>
+  <p class="text-muted mt-2">Loading dashboard...</p>
+</div>
+
+<div class="table-responsive" ng-if="!loading">
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th style="width:40px; text-align:center;">
+          <input class="form-check-input" type="checkbox" ng-model="selectAll" ng-change="toggleSelectAll()">
+        </th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="p in paginatedProducts | filter:searchText">
+        <td class="text-center">
+          <input class="form-check-input" type="checkbox" ng-model="selectedIds[p.id]" ng-change="toggleProductSelection()">
+        </td>
+        <td>
+          <img ng-src="{{p.img}}" img-fallback style="width:60px; height:60px; object-fit:contain;">
+        </td>
+        <td>{{p.name}}</td>
+        <td>{{p.price}} LE</td>
+        <td>
+          <span class="badge" ng-class="{'bg-success': p.stock > 5, 'bg-warning': p.stock <= 5 && p.stock > 0, 'bg-danger': p.stock == 0}">
+            {{p.stock}}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-warning btn-sm me-1" ng-click="goToEdit(p)">
+            <i class="fa-solid fa-pen"></i> Edit
+          </button>
+          <button class="btn btn-danger btn-sm" ng-click="deleteProduct(p.id)">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div ng-if="!loading && products.length === 0" class="text-center py-4 text-muted">
+  No products found.
+</div>
+
+<nav ng-if="totalPages > 1 && !loading" class="mt-4 mb-4">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" ng-class="{disabled: currentPage === 1}">
+      <a class="page-link" href="" ng-click="prevPage()">Previous</a>
+    </li>
+    <li class="page-item" ng-repeat="page in pageNumbers" ng-class="{active: page === currentPage}">
+      <a class="page-link" href="" ng-click="goToPage(page)">{{page}}</a>
+    </li>
+    <li class="page-item" ng-class="{disabled: currentPage === totalPages}">
+      <a class="page-link" href="" ng-click="nextPage()">Next</a>
+    </li>
+  </ul>
+</nav>
+
+</div>

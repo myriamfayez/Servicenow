@@ -1,0 +1,88 @@
+<div class="container-fluid pt-4 px-4" ng-controller="medicationController">
+
+<div class="text-center mb-4">
+<h2><i class="fa-solid fa-pills me-2"></i>Medication</h2>
+<p class="text-muted">Prescription & over-the-counter medicines</p>
+<div class="row justify-content-center mt-3">
+<div class="col-md-6">
+<input class="form-control" type="search" placeholder="Search medication..." ng-model="searchText" style="border-radius:20px;">
+</div>
+</div>
+</div>
+
+<div ng-if="loading" class="text-center py-5">
+<div class="spinner-border text-success" role="status"></div>
+<p class="text-muted mt-2">Loading products...</p>
+</div>
+
+<div class="row g-3" ng-if="!loading">
+
+<div class="col-md-3 d-flex"
+ng-repeat="p in paginatedProducts | filter:searchText">
+
+<div class="card product-card w-100 h-100">
+
+<a href="#!/product/{{p.id}}">
+<img ng-src="{{p.img}}" img-fallback class="card-img-top" style="height:200px; object-fit:contain; padding:10px;">
+</a>
+
+<div class="card-body text-center">
+
+<h6 style="height:48px; overflow:hidden;">
+{{p.name}}
+</h6>
+
+<div class="fw-bold text-success">
+{{p.price}} LE
+</div>
+
+<div style="height:20px;">
+<span ng-if="p.stock <= lowStock" class="badge bg-danger">
+Low Stock
+</span>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-2">
+
+<button ng-click="toggleFavorite(p)" style="border:none;background:none">
+<i ng-if="!p.liked" class="fa-regular fa-heart"></i>
+<i ng-if="p.liked" class="fa-solid fa-heart text-danger"></i>
+</button>
+
+<div ng-if="!cart[p.id]">
+<button class="btn btn-success btn-sm" ng-click="addToCart(p)">
+Add to cart
+</button>
+</div>
+
+<div ng-if="cart[p.id]" class="qty-box d-flex align-items-center gap-2">
+<button class="btn btn-outline-secondary btn-sm" ng-click="decreaseQty(p)">-</button>
+<strong>{{cart[p.id].qty}}</strong>
+<button class="btn btn-outline-secondary btn-sm" ng-click="increaseQty(p)" ng-disabled="cart[p.id].qty >= p.stock">+</button>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<nav ng-if="totalPages > 1" class="mt-4 mb-4">
+<ul class="pagination justify-content-center">
+<li class="page-item" ng-class="{disabled: currentPage === 1}">
+<a class="page-link" href="" ng-click="prevPage()">Previous</a>
+</li>
+<li class="page-item" ng-repeat="page in pageNumbers" ng-class="{active: page === currentPage}">
+<a class="page-link" href="" ng-click="goToPage(page)">{{page}}</a>
+</li>
+<li class="page-item" ng-class="{disabled: currentPage === totalPages}">
+<a class="page-link" href="" ng-click="nextPage()">Next</a>
+</li>
+</ul>
+</nav>
+
+</div>

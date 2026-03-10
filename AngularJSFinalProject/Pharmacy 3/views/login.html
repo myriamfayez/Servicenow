@@ -1,0 +1,39 @@
+<div class="container mt-5" ng-controller="loginController">
+<div class="row justify-content-center">
+
+<div class="col-md-4">
+
+<div class="card shadow p-4">
+
+<h3 class="text-center mb-4">Login</h3>
+
+<form ng-submit="login()">
+
+<div class="mb-3">
+<label>Email</label>
+<input type="email" class="form-control" ng-model="user.email" required>
+</div>
+
+<div class="mb-3">
+<label>Password</label>
+<input type="password" class="form-control" ng-model="user.password" required>
+</div>
+
+<button type="submit" class="btn btn-success w-100">
+Login
+</button>
+
+<p class="text-center mt-3">
+Don't have account?
+<a href="#!/register">Register</a>
+</p>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pharmacy</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="index.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+</head>
+
+<body ng-app="myapp">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container">
+
+<a class="navbar-brand" href="#!/home">
+<img src="./imgs/Unknown-2.jpg" style="width:60px;height:60px; border-radius:8px;">
+</a>
+
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+<span class="navbar-toggler-icon"></span>
+</button>
+
+<div class="collapse navbar-collapse" id="navbarMenu">
+
+<ul class="navbar-nav ms-auto align-items-center">
+
+<li class="nav-item">
+<a class="nav-link" href="#!/home">Home</a>
+</li>
+
+<li class="nav-item dropdown">
+
+<a class="nav-link dropdown-toggle"
+href="#"
+role="button"
+data-bs-toggle="dropdown">
+
+Categories
+
+</a>
+
+<ul class="dropdown-menu">
+
+<li>
+<a class="dropdown-item" href="#!/allproducts">
+<i class="fa-solid fa-layer-group me-2"></i>All Products
+</a>
+</li>
+
+<li>
+<a class="dropdown-item" href="#!/beauty">
+<i class="fa-solid fa-spa me-2"></i>Beauty
+</a>
+</li>
+
+<li>
+<a class="dropdown-item" href="#!/medication">
+<i class="fa-solid fa-pills me-2"></i>Medication
+</a>
+</li>
+
+<li>
+<a class="dropdown-item" href="#!/vitamins">
+<i class="fa-solid fa-capsules me-2"></i>Vitamins
+</a>
+</li>
+
+</ul>
+
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#!/about">About Us</a>
+</li>
+
+<li class="nav-item">
+<a class="nav-link" href="#!/contact">Contact</a>
+</li>
+
+
+<li class="nav-item dropdown" ng-if="isAdmin">
+
+<a class="nav-link dropdown-toggle"
+href="#"
+role="button"
+data-bs-toggle="dropdown">
+
+Dashboard
+
+</a>
+
+<ul class="dropdown-menu">
+
+<li>
+<a class="dropdown-item" href="#!/beautydashboard">
+<i class="fa-solid fa-table me-2"></i>Products
+</a>
+</li>
+
+<li>
+<a class="dropdown-item" href="#!/inventory">
+<i class="fa-solid fa-warehouse me-2"></i>Inventory
+</a>
+</li>
+
+<li>
+<a class="dropdown-item" href="#!/orders">
+<i class="fa-solid fa-list-check me-2"></i>Orders
+</a>
+</li>
+
+</ul>
+
+</li>
+
+
+
+<li class="nav-item">
+<a class="nav-link position-relative" href="#!/favorites" style="padding-right: 15px;">
+<i class="fa-regular fa-heart"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+      style="font-size: 10px; padding: 3px 6px;" 
+      ng-if="$root.getFavoritesCount() > 0">
+  {{$root.getFavoritesCount()}}
+</span>
+</a>
+</li>
+
+
+
+<li class="nav-item">
+<a class="nav-link position-relative" href="#!/cart" style="padding-right: 15px;">
+<i class="fa-solid fa-cart-shopping" style="font-size:18px;"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+      style="font-size: 10px; padding: 3px 6px;" 
+      ng-if="$root.getCartCount() > 0">
+  {{$root.getCartCount()}}
+</span>
+</a>
+</li>
+
+<li class="nav-item" ng-if="isLoggedIn">
+<a class="nav-link" href="#!/profile">
+<i class="fa-solid fa-user me-1"></i>
+{{$root.username}}
+</a>
+</li>
+
+<li class="nav-item" ng-if="isLoggedIn">
+<a class="nav-link text-danger" href="" ng-click="logout()">
+Logout
+</a>
+</li>
+
+
+<li class="nav-item" ng-if="!isLoggedIn">
+<a class="nav-link" href="#!/login">Login</a>
+</li>
+
+<li class="nav-item" ng-if="!isLoggedIn">
+<a class="nav-link" href="#!/register">Register</a>
+</li>
+
+</ul>
+
+</div>
+
+</div>
+</nav>
+
+<div ng-view></div>
+<footer style="background:#2d2d2d; color:#ccc; padding:40px 0; margin-top:30px;">
+<div class="container">
+<div class="row">
+
+<div class="col-md-4 mb-3">
+<h5 style="color:white;"><i class="fa-solid fa-prescription-bottle-medical me-2"></i>Pharmacy</h5>
+<p style="font-size:14px;">Your trusted online pharmacy for all your health, wellness, and beauty needs.</p>
+</div>
+
+<div class="col-md-4 mb-3">
+<h6 style="color:white;">Quick Links</h6>
+<ul style="list-style:none; padding:0; font-size:14px;">
+<li class="mb-1"><a href="#!/home" style="color:#aaa; text-decoration:none;">Home</a></li>
+<li class="mb-1"><a href="#!/medication" style="color:#aaa; text-decoration:none;">Medication</a></li>
+<li class="mb-1"><a href="#!/vitamins" style="color:#aaa; text-decoration:none;">Vitamins</a></li>
+<li class="mb-1"><a href="#!/beauty" style="color:#aaa; text-decoration:none;">Beauty</a></li>
+<li class="mb-1"><a href="#!/about" style="color:#aaa; text-decoration:none;">About Us</a></li>
+<li class="mb-1"><a href="#!/contact" style="color:#aaa; text-decoration:none;">Contact Us</a></li>
+</ul>
+</div>
+
+<div class="col-md-4 mb-3">
+<h6 style="color:white;">Contact Us</h6>
+<p style="font-size:14px;" class="mb-1"><i class="fa-solid fa-phone me-2"></i>+20 123 456 7890</p>
+<p style="font-size:14px;" class="mb-1"><i class="fa-solid fa-envelope me-2"></i>support@pharmacy.com</p>
+<p style="font-size:14px;" class="mb-1"><i class="fa-solid fa-location-dot me-2"></i>Cairo, Egypt</p>
+</div>
+
+</div>
+
+<hr style="border-color:#444;">
+
+<div class="text-center" style="font-size:13px;">
+<p class="mb-0">&copy; 2026 Pharmacy. All rights reserved.</p>
+</div>
+
+</div>
+</footer>
+<script src="app.js"></script>
+
+<script src="services/productService.js"></script>
+<script src="services/storeservice.js"></script>
+<script src="services/orderService.js"></script>
+
+<script src="controllers/homeController.js"></script>
+<script src="controllers/allProductsController.js"></script>
+<script src="controllers/loginController.js"></script>
+<script src="controllers/registerController.js"></script>
+<script src="controllers/cartController.js"></script>
+<script src="controllers/checkoutController.js"></script>
+<script src="controllers/invoiceController.js"></script>
+<script src="controllers/favoritesController.js"></script>
+<script src="controllers/beautyDashboardController.js"></script>
+<script src="controllers/beautyController.js"></script>
+<script src="controllers/medicationController.js"></script>
+<script src="controllers/vitaminsController.js"></script>
+<script src="controllers/productFormController.js"></script>
+<script src="controllers/productDetailController.js"></script>
+<script src="controllers/profileController.js"></script>
+<script src="controllers/inventoryController.js"></script>
+<script src="controllers/ordersController.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

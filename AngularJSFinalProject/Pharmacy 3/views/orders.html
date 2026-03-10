@@ -1,0 +1,78 @@
+<div class="container mt-4 vh-100" ng-controller="ordersController">
+
+<h3 class="mb-4"><i class="fa-solid fa-list-check me-2"></i>Orders Management</h3>
+
+<div ng-if="orders.length === 0" class="text-center text-muted py-5">
+<h5>No orders yet</h5>
+</div>
+
+<table class="table table-bordered" ng-if="orders.length > 0">
+
+<thead class="table-light">
+<tr>
+<th>Order #</th>
+<th>Customer</th>
+<th>Date</th>
+<th>Items</th>
+<th>Total</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr ng-repeat="order in orders">
+
+<td>#{{order.id}}</td>
+<td>{{order.username}}</td>
+<td>{{order.created_at | date:'dd/MM/yyyy HH:mm'}}</td>
+
+<td>
+<ul class="list-unstyled mb-0" style="font-size:13px;">
+<li ng-repeat="item in order.items">
+{{item.name}} x{{item.qty}}
+</li>
+</ul>
+</td>
+
+<td class="fw-bold">{{order.total}} LE</td>
+
+<td>
+<span class="badge"
+ng-class="{
+'bg-success': order.status === 'completed',
+'bg-warning': order.status === 'pending',
+'bg-danger': order.status === 'cancelled'
+}">
+{{order.status}}
+</span>
+</td>
+
+<td>
+<button class="btn btn-success btn-sm me-1"
+ng-click="updateStatus(order, 'completed')"
+ng-disabled="order.status === 'completed'">
+Complete
+</button>
+
+<button class="btn btn-warning btn-sm me-1"
+ng-click="updateStatus(order, 'pending')"
+ng-disabled="order.status === 'pending'">
+Pending
+</button>
+
+<button class="btn btn-danger btn-sm"
+ng-click="updateStatus(order, 'cancelled')"
+ng-disabled="order.status === 'cancelled'">
+Cancel
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>

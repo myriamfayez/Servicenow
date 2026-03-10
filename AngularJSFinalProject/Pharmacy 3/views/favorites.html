@@ -1,0 +1,68 @@
+<div class="container" ng-controller="favoritesController">
+
+<div class="row g-4 mt-5" ng-if="$root.getFavoritesCount() > 0">
+
+<div class="col-md-3 d-flex" ng-repeat="p in favorites">
+
+<div class="card w-100 h-100 d-flex flex-column">
+
+<img ng-src="{{p.img}}" class="card-img-top" style="height:200px; object-fit:contain;">
+
+<div class="card-body text-center d-flex flex-column">
+
+<h6 class="flex-grow-1">{{p.name}}</h6>
+
+<p>{{p.price}}</p>
+
+<div class="mt-auto">
+
+
+<div ng-if="!cart[p.id]">
+
+<button class="btn btn-success btn-sm"
+ng-click="addToCart(p)">
+Add to cart
+</button>
+
+</div>
+
+
+<div ng-if="cart[p.id]" class="d-flex justify-content-center align-items-center gap-2 mb-2">
+
+<button class="btn btn-outline-secondary btn-sm"
+ng-click="decreaseQty(p)">
+-
+</button>
+
+<strong>{{cart[p.id].qty}}</strong>
+
+<button class="btn btn-outline-secondary btn-sm"
+ng-click="increaseQty(p)">
++
+</button>
+
+</div>
+
+
+<button class="btn btn-danger btn-sm mt-2"
+ng-click="removeFavorite(p)">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div ng-if="$root.getFavoritesCount() === 0" class="text-center mt-5 pt-5 vh-100">
+<i class="fa-regular fa-heart mb-3" style="font-size: 60px; color: #dee2e6;"></i>
+<h4 class="text-muted">No products found</h4>
+<a href="#!/home" class="btn btn-outline-success mt-3">Browse Products</a>
+</div>
+
+</div>

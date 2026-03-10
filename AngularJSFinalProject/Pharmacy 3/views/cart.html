@@ -1,0 +1,57 @@
+<div class="container mt-3 vh-100" ng-controller="cartController">
+
+<div class="row g-4" ng-if="cart.length > 0">
+
+<div class="col-md-3" ng-repeat="p in cart">
+
+<div class="card h-100">
+
+<img ng-src="{{p.product.img}}" class="card-img-top"
+style="height:200px; object-fit:contain; padding:15px;">
+
+<div class="card-body text-center">
+
+<h6 style="height:48px; overflow:hidden;">
+{{p.product.name}}
+</h6>
+
+<p class="fw-bold">
+{{p.product.price}} LE
+</p>
+
+<p class="text-muted">
+Qty: {{p.qty}}
+</p>
+
+<button class="btn btn-danger btn-sm"
+ng-click="removeFromCart(p.product)">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="text-center mt-5" ng-if="cart.length > 0">
+
+<a href="#!/checkout" class="btn btn-success btn-lg" ng-if="$root.isLoggedIn">
+Go to Checkout
+</a>
+
+<a href="#!/login" class="btn btn-success btn-lg" ng-if="!$root.isLoggedIn">
+Login to Checkout
+</a>
+
+</div>
+
+<div ng-if="cart.length === 0" class="text-center mt-5 pt-5">
+<i class="fa-solid fa-cart-shopping mb-3" style="font-size: 60px; color: #dee2e6;"></i>
+<h4 class="text-muted">No products found</h4>
+<a href="#!/home" class="btn btn-outline-success mt-3">Browse Products</a>
+</div>
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container mt-4" ng-controller="inventoryController">
+
+<h3 class="mb-4"><i class="fa-solid fa-warehouse me-2"></i>Inventory Management</h3>
+
+<div class="table-responsive">
+<table class="table table-bordered">
+
+<thead class="table-light">
+<tr>
+<th>Image</th>
+<th>Name</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr ng-repeat="p in products | filter:searchText"
+ng-class="{
+'table-danger': p.stock <= lowStock && p.stock > 0,
+'table-dark': p.stock === 0
+}">
+
+<td>
+<img ng-src="{{p.img}}" width="50">
+</td>
+
+<td>{{p.name}}</td>
+<td><span class="badge bg-secondary">{{p.category}}</span></td>
+<td>{{p.price}} LE</td>
+
+<td>
+<input type="number" class="form-control form-control-sm"
+style="width:80px;"
+ng-model="p.stock">
+</td>
+
+<td>
+<span ng-if="p.stock > lowStock" class="badge bg-success">In Stock</span>
+<span ng-if="p.stock <= lowStock && p.stock > 0" class="badge bg-warning">Low Stock</span>
+<span ng-if="p.stock === 0" class="badge bg-danger">Out of Stock</span>
+</td>
+
+<td>
+<button class="btn btn-primary btn-sm"
+ng-click="updateStock(p)">
+Update
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+</div>
+
+</div>
