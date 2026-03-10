@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Student List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #fff;
+    }
+    .highlight {
+      color: #198754 !important;  
+      font-weight: 600;
+    }
+    .low {
+      color: #dc3545 !important;   
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body ng-controller="myCtrl">
+
+<div class="container py-4">
+  <h5 class="mb-3">Student</h5>
+
+  <div class="row mb-3">
+    <div class="col-md-6 mb-2">
+      <input type="text"
+             class="form-control"
+             placeholder="Search by name"
+             ng-model="searchText">
+    </div>
+
+    <div class="col-md-6">
+      <select class="form-select" ng-model="sortType">
+        <option value="name">Sort by Name</option>
+        <option value="-marks">Sort by Marks (High to Low)</option>
+        <option value="marks">Sort by Marks (Low to High)</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="table table-sm table-bordered text-center">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="student in students | filter:{name: searchText} | orderBy: sortType track by $index">
+        <td>{{$index + 1}}</td>
+        <td ng-class="{'highlight': student.marks >= 80}">
+          {{student.name}}
+        </td>
+        <td ng-class="{'highlight': student.marks >= 80, 'low': student.marks < 40}">
+          {{student.marks}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="text-danger text-center mt-2"
+     ng-if="(students | filter:{name: searchText}).length == 0">
+    No student found
+  </p>
+</div>
+
+<script>
+  var app = angular.module("myApp", []);
+  app.controller("myCtrl", function($scope) {
+
+    $scope.searchText = "";
+    $scope.sortType = "name";
+
+    $scope.students = [
+      { name: "Ali", marks: 92 },
+      { name: "David", marks: 29 },
+      { name: "Engy", marks: 74 },
+      { name: "Jala", marks: 85 },
+      { name: "Ramy", marks: 38 }
+    ];
+
+  });
+</script>
+
+</body>
+</html>

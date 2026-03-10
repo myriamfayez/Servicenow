@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html ng-app="productApp">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/angular@1.8.2/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+  <style>
+    .loading { color: blue; }
+    .error { color: red; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+  </style>
+</head>
+<body ng-controller="ProductCtrl">
+
+  <h1>Product Management</h1>
+
+  <p class="loading" ng-if="loading">Loading...</p>
+  <p class="error" ng-if="error">{{ error }}</p>
+
+  <form ng-submit="addProduct()">
+    <input type="text" ng-model="newProduct.name" placeholder="Name" required />
+    <input type="number" ng-model="newProduct.price" placeholder="Price" required />
+    <button type="submit">Add</button>
+  </form>
+
+  <br />
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="p in products">
+      <td>
+        <input ng-model="p.name" />
+      </td>
+      <td>
+        <input type="number" ng-model="p.price" />
+      </td>
+      <td>
+        <button ng-click="updateProduct(p)">Update</button>
+        <button ng-click="deleteProduct(p.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+
+
+
+
+  <script>
+
+    var app = angular.module("productApp", []);
+
+app.factory("ProductService", function ($q) {
+  const supabaseClient = supabase.createClient(
+    "https://eyenvepjdscszapilzdi.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV5ZW52ZXBqZHNjc3phcGlsemRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNTMzMTEsImV4cCI6MjA4NjkyOTMxMX0.UIjUXMi3VSEX6zBOpoasYCWHslSGADmyPMkQA0bQ4F4"
+  );
+
+  return {
+    getAll: function () {
+      return $q(function (resolve, reject) {
+        supabaseClient.from("products").select("*")
+          .then(res => res.error ? reject(res.error) : resolve(res.data));
+      });
+    },
+
+    add: function (product) {
+      return $q(function (resolve, reject) {
+        supabaseClient.from("products").insert([product])
+          .then(res => res.error ? reject(res.error) : resolve(res.data));
+      });
+    },
+
+    update: function (id, product) {
+      return $q(function (resolve, reject) {
+        supabaseClient.from("products").update(product).eq("id", id)
+          .then(res => res.error ? reject(res.error) : resolve(res.data));
+      });
+    },
+
+    delete: function (id) {
+      return $q(function (resolve, reject) {
+        supabaseClient.from("products").delete().eq("id", id)
+          .then(res => res.error ? reject(res.error) : resolve(res.data));
+      });
+    }
+  };
+});
+
+
+app.controller("ProductCtrl", function ($scope, ProductService) {
+  $scope.products = [];
+  $scope.loading = false;
+  $scope.error = null;
+  $scope.newProduct = {};
+
+  function loadProducts() {
+    $scope.loading = true;
+    ProductService.getAll()
+      .then(data => {
+        $scope.products = data;
+      })
+      .catch(err => {
+        $scope.error = err.message || "Error loading products";
+      })
+      .finally(() => {
+        $scope.loading = false;
+        $scope.$applyAsync();
+      });
+  }
+
+  $scope.addProduct = function () {
+    $scope.loading = true;
+    ProductService.add($scope.newProduct)
+      .then(() => {
+        $scope.newProduct = {};
+        loadProducts();
+      })
+      .catch(err => $scope.error = err.message)
+      .finally(() => {
+        $scope.loading = false;
+        $scope.$applyAsync();
+      });
+  };
+
+  $scope.updateProduct = function (product) {
+    $scope.loading = true;
+    ProductService.update(product.id, {
+      name: product.name,
+      price: product.price
+    })
+      .then(loadProducts)
+      .catch(err => $scope.error = err.message)
+      .finally(() => {
+        $scope.loading = false;
+        $scope.$applyAsync();
+      });
+  };
+
+  $scope.deleteProduct = function (id) {
+    if (!confirm("Are you sure?")) return;
+
+    $scope.loading = true;
+    ProductService.delete(id)
+      .then(loadProducts)
+      .catch(err => $scope.error = err.message)
+      .finally(() => {
+        $scope.loading = false;
+        $scope.$applyAsync();
+      });
+  };
+
+  loadProducts();
+});
+  </script>
+</body>
+</html>

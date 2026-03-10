@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Angular--Js</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    
+
+<div class="form m-5 p-5 bg-light rounded-3" ng-app="myapp" ng-controller="myctrl">
+
+
+    <div class="mb-3 row">
+  <label for="staticEmail"  ng-click="islogged =!islogged"  class="col-sm-2 col-form-label">Name</label>
+  <div class="col-sm-10">
+    <input type="name" ng-model="nameinput" class="form-control" id="inputmail" required>
+  </div>
+</div>
+
+
+<div class="mb-3 row">
+  <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+
+
+  <div class="col-sm-10">
+    <input type="password" class="form-control" ng-model="pass" id="inputPassword" required>
+  </div>
+
+</div>
+
+
+<div class="btn d-flex justify-content-center align-items-center">
+<button type="button"   ng-click="login()"  class="btn bg-success">Login</button>
+</div>
+
+
+
+
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
+  <label class="form-check-label" for="checkChecked">
+    Check checkbox
+  </label>
+</div>
+
+
+
+<!-- <div class="msg" ng-if="islogged" ng-model="msg" ng-show="show=!show"></div> -->
+
+<!-- <p ng-show>welcome {{nameinput}}</p> -->
+
+</div>
+
+
+
+
+
+
+<script>
+
+    var app = angular.module ("myapp",[])
+    app.controller("myctrl",function($scope){
+
+// $scope.disabled=true
+
+// $scope.islogged =function islogged(){
+
+//     islogged=false;
+
+    
+$scope.login=function(){
+
+if ($scope.nameinput && $scope.pass){
+    $scope.msg = "Welcomeeee" + $scope.nameinput
+        $scope.islogged = true;
+
+}
+
+else {$scope.msg ="Please fill the fields"}
+        $scope.islogged = false;
+
+
+}
+
+
+})
+</script>
+</body>
+</html>

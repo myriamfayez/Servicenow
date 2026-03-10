@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body>
+
+<div ng-controller="myCtrl">
+    <h2>{{ "myriam" | capitalize }}</h2>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+
+
+
+app.controller('myCtrl', function($scope) {});
+
+app.filter('capitalize', function() {
+    return function(input) {
+        if (!input) return '';
+        return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+    };
+});
+
+</script>
+
+</body>
+</html>

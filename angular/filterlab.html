@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>AngularJS Filters Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+
+    <div ng-controller="myCtrl">
+        <h1>{{ message | lowercase }}</h1>
+        <h2>{{ date | date:'medium' }}</h2>
+        <h2>{{ price | number:2 | currency:'$' }}</h2>
+        <h2>{{ "AngularJS" | reverse }}</h2>
+        <my-message></my-message>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+
+
+        app.controller('myCtrl', function($scope) {
+            $scope.message = "Hello, AngularJS with Boots";
+            $scope.date = new Date();
+            $scope.price = 123.456666666;
+        });
+
+        app.filter('reverse', function() {
+            return function(input) {
+                return input.split('').reverse().join('');
+            };
+        });
+
+          app.directive ("myMessage",function(){
+return{
+    template:"<h2>Hello</h2>"
+}
+
+        })
+      
+    </script>
+
+</body>
+</html>

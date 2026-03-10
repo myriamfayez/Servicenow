@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Products</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    .custom-card {
+      transition: 0.3s;
+      border-radius: 15px;
+    }
+
+    .price {
+      color: black;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body ng-controller="myCtrl">
+
+<div class="container py-5">
+  <h2 class="text-center mb-5">Products</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" ng-repeat="product in products">
+      
+      <div class="card custom-card p-3">
+        <img ng-src="{{product.image}}" 
+             class="card-img-top" 
+             height="200" 
+             style="object-fit:cover;">
+        
+        <div class="card-body text-center">
+          <h5 class="card-title">{{product.title}}</h5>
+          <p class="price">{{product.price}} EGP</p>
+
+
+
+
+          <h6>Count = {{product.count}}</h6>
+
+          <div class="d-flex justify-content-center gap-2 mb-3">
+            <button class="btn btn-success"
+                    ng-click="product.count = product.count + 1">
+              +
+            </button>
+
+            <button class="btn btn-danger"
+                    ng-click="product.count = product.count - 1"
+                    ng-disabled="product.count == 0">
+              -
+            </button>
+          </div>
+
+          <button class="btn btn-primary">
+            Add To Cart
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var app = angular.module("myApp", []);
+
+  app.controller("myCtrl", function($scope) {
+
+
+// app.directive('counter',function(){
+
+//     return{
+
+//     }
+// })
+
+    $scope.products = [
+      {
+        title: "Laptop",
+        price: 15000,
+        image: "https://m.media-amazon.com/images/I/41Dg9haNatL.jpg",
+        count: 0
+      },
+      {
+        title: "Mobile",
+        price: 8000,
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmsGow6BfyXzfJj9jGh6VTn4IrNpVczYBgnw&s",
+        count: 0
+      },
+      {
+        title: "Headphones",
+        price: 1200,
+        image: "data:image/jpeg;base64,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",
+        count: 0
+      }
+    ];
+
+  });
+  
+</script>
+
+</body>
+</html>
