@@ -5,6 +5,10 @@ create table departments (
 
 select * from departments
 
+--EXISTS MEANS LW TRUE HY722 EL SELECT EL FO2 MSH BYSHT8LO SHO8L B3D
+SELECT DEPT_NAME FROM DEPARTMENTS WHERE EXISTS(
+SELECT 1 FROM DEPARTMENTS WHERE DEPT_ID=3
+)
 create table employees (
     emp_id serial primary key,
     emp_name varchar(100) not null,
@@ -12,6 +16,16 @@ create table employees (
     dept_id int,
     hire_date date
 );
+
+select
+    emp_name,
+    salary,
+    case
+        when salary >= 10000 then 'high'
+        when salary >= 5000 then 'medium'
+        else 'low'
+    end as salary_level
+from employees;
 
 select * from employees
 
