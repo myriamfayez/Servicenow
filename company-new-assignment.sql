@@ -1,30 +1,21 @@
 
-select * from employees
-where salary between 4000 and 9000;
+select * from employees where salary between 4000 and 9000;
+
+
+select * from employees where emp_name similar to 'a%';
+
+
+
+select * from employees where dept_id is null;
+
+
+
+select *from employees where dept_id in (1,2,3);
 
 
 
 
-select * from employees
-where emp_name similar to 'a%';
-
-
-
-select * from employees
-where dept_id is null;
-
-
-
-
-
-select *from employees
-where dept_id in (1,2,3);
-
-
-
-
-select emp_name, salary,
-case
+select emp_name, salarycase
 when salary > 8000 then 'high'
 when salary between 4000 and 8000 then 'medium'
 else 'low'
@@ -44,18 +35,17 @@ where p.emp_id = e.emp_id
 
 
 
-select * from employees where salary > any (
+select * from employees where salary > any 
+(
 select salary
 from employees
-where dept_id = 2
-);
+where dept_id = 2);
 
 
 
 select * from employees where salary = (
 select max(salary)
-from employees
-);
+from employees);
 
 
 
@@ -70,8 +60,7 @@ where salary > 8000;
 
 delete from employees e where not exists (
 select 1
-from projects p where p.emp_id = e.emp_id
-);
+from projects p where p.emp_id = e.emp_id);
 
 
 
@@ -79,8 +68,7 @@ from projects p where p.emp_id = e.emp_id
 select * from departments d where not exists (
 select 1
 from employees e
-where e.dept_id = d.dept_id
-);
+where e.dept_id = d.dept_id);
 
 
 
@@ -154,8 +142,7 @@ on d.dept_id = e.dept_id;
 
 
 
-alter table projects
-add column hours_worked int;
+alter table projects add column hours_worked int;
 
 
 
@@ -168,15 +155,13 @@ update projects set hours_worked = 90 where project_id = 2;
 update projects set hours_worked = 150 where project_id = 3;
 
 
-select project_name, sum(hours_worked) as total_hours
-from projects
+select project_name, sum(hours_worked) as total_hours from projects
 group by project_name
 order by total_hours desc;
 
 
 
-select d.dept_name, avg(e.salary)
-from departments d
+select d.dept_name, avg(e.salary)from departments d
 join employees e
 on d.dept_id = e.dept_id
 group by d.dept_name
