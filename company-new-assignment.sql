@@ -72,8 +72,7 @@ where e.dept_id = d.dept_id);
 
 
 
-select distinct location
-from departments;
+select distinct location from departments;
 
 
 
