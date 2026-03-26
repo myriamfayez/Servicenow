@@ -3,13 +3,9 @@ create table users (
     name varchar(100) not null,
     email varchar(150) unique not null,
     phone varchar(20),
-    password varchar(255) not null,
+    password text not null,
     role varchar(20) check (role in ('customer','admin')) default 'customer',
     created_at timestamp default current_timestamp);
-
-
-
-
 
 insert into users (name, email, phone, password, role) values
 ('ahmed ali','ahmed@gmail.com','01000000001','123456','customer'),
@@ -18,16 +14,18 @@ insert into users (name, email, phone, password, role) values
 ('admin user','admin@gmail.com','01000000004','admin123','admin');
 
 
+
+
 ALTER TABLE users ALTER COLUMN password TYPE text;
 
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pgcrypto; 
 
 
 INSERT INTO users (name, email, password)
 VALUES (
   'mariam',
   'm@gmail.com',
-  crypt('123456', gen_salt('bf'))); 
+  crypt('123456', gen_salt('bf'))); --bf encry type , every time generate new salt even if same pass for users
   
 
 update users set password = crypt(password, gen_salt('bf'));
@@ -40,7 +38,7 @@ create table hotels (
     hotel_id serial primary key,
     name varchar(150) not null,
     location varchar(150) not null,
-    rating decimal(2,1), --1 no after dot total 2
+    rating decimal(2,1),
     description text);
 
 insert into hotels (name, location, rating, description) values
@@ -52,7 +50,7 @@ insert into hotels (name, location, rating, description) values
 
 create table rooms (
     room_id serial primary key,
-    hotel_id int references hotels(hotel_id) on delete cascade,
+    hotel_id int references hotels(hotel_id) on delete cascade, -- whwn parent deleted what should we do in children in table of fk 
     room_type varchar(50),
     price decimal(10,2),
     is_available boolean default true);
@@ -105,6 +103,7 @@ create table flights (
     price decimal(10,2),
     total_seats int,
     available_seats int);
+    
 
 insert into flights (airline_id, departure_city, arrival_city, departure_time, arrival_time, price, total_seats, available_seats) values
 (1,'cairo','dubai','2026-04-01 10:00','2026-04-01 14:00',5000,150,140),
@@ -171,102 +170,103 @@ ADD CONSTRAINT unique_flight_booking UNIQUE (flight_booking_id);
 
 
 
--- users 7gzo --
-select 
+
+
+--aktar users by7gzo 
+SELECT 
     u.user_id,
     u.name,
-    count(distinct hb.booking_id) as hotel_bookings,
-    count(distinct fb.booking_id) as flight_bookings
-from users u
- join hotel_bookings hb on u.user_id = hb.user_id
-join flight_bookings fb on u.user_id = fb.user_id
-group by u.user_id, u.name;
+    COUNT(DISTINCT hb.booking_id) AS hotel_bookings,
+    COUNT(DISTINCT fb.booking_id) AS flight_bookings
+FROM users u
+LEFT JOIN hotel_bookings hb ON u.user_id = hb.user_id
+LEFT JOIN flight_bookings fb ON u.user_id = fb.user_id
+GROUP BY u.user_id, u.name;
 
 
 
--- best hotels based on rating to enable managers make decisions-----
-select  name,location,rating
-from hotels
-order by rating desc;
+-- best hotels based on rating  to enable mangers make descions
+
+SELECT 
+    name,
+    location,
+    rating
+FROM hotels
+ORDER BY rating DESC;
 
 
 
--- no of rooms in each hotel to know the capacity----
-select  h.name, count(r.room_id) as total_rooms
-from hotels h
- join rooms r on h.hotel_id = r.hotel_id
-group by h.name;
+
+-- no of rooms in each hotel to know the capacity
+SELECT 
+    h.name,
+    COUNT(r.room_id) AS total_rooms
+FROM hotels h
+LEFT JOIN rooms r ON h.hotel_id = r.hotel_id
+GROUP BY h.name;
+
+-- total revenues of hotels 
+
+SELECT 
+    SUM(total_cost) AS total_hotel_revenue
+FROM hotel_bookings
+WHERE status = 'confirmed';
 
 
+--total revenues of flights
+SELECT 
+    SUM(amount) AS total_flight_revenue
+FROM payments
+WHERE flight_booking_id IS NOT NULL;
 
------- total revenues of hotels---- 
-select sum(total_cost) as total_hotel_revenue
-from hotel_bookings
-where status = 'confirmed';
-
-
-
------ total revenues of flights------
-select sum(amount) as total_flight_revenue
-from payments
-where flight_booking_id is not null;
-
-
-
------- available rooms in cairo----- 
-select 
-    h.name as hotel_name,
+-- available rooms in cairo 
+SELECT 
+    h.name AS hotel_name,
     r.room_type,
     r.price
-from rooms r
-join hotels h on r.hotel_id = h.hotel_id
-where r.is_available = true
-and h.location = 'cairo';
+FROM rooms r
+JOIN hotels h ON r.hotel_id = h.hotel_id
+WHERE r.is_available = true
+AND h.location = 'cairo';
 
-
-
------- report about hotels' reservations-----
-select 
-    u.name as user_name,
-    h.name as hotel_name,
+--report about hotels' reservations
+SELECT 
+    u.name AS user_name,
+    h.name AS hotel_name,
     r.room_type,
     hb.check_in,
     hb.check_out,
     hb.total_cost,
     hb.status
-from hotel_bookings hb
-join users u on hb.user_id = u.user_id
-join rooms r on hb.room_id = r.room_id
-join hotels h on r.hotel_id = h.hotel_id;
+FROM hotel_bookings hb
+JOIN users u ON hb.user_id = u.user_id
+JOIN rooms r ON hb.room_id = r.room_id
+JOIN hotels h ON r.hotel_id = h.hotel_id;
 
-
-
--------- most flights reserved-------- 
-select 
+--most flights reserved 
+SELECT 
     f.flight_id,
     f.departure_city,
     f.arrival_city,
-    count(fb.booking_id) as total_bookings
-from flights f
-join flight_bookings fb on f.flight_id = fb.flight_id
-group by f.flight_id, f.departure_city, f.arrival_city
-order by total_bookings desc;
+    COUNT(fb.booking_id) AS total_bookings
+FROM flights f
+LEFT JOIN flight_bookings fb ON f.flight_id = fb.flight_id
+GROUP BY f.flight_id
+ORDER BY total_bookings DESC;
 
 
-
-------- users cancelled their hotel reservation------ 
-select distinct u.name
-from users u
-join hotel_bookings hb on u.user_id = hb.user_id
-where hb.status = 'cancelled';
-
+--users cancelled their hotel reservation 
+SELECT DISTINCT u.name
+FROM users u
+JOIN hotel_bookings hb ON u.user_id = hb.user_id
+WHERE hb.status = 'cancelled';
 
 
--------- most paid users------
-select 
+--Most paid users
+SELECT 
     u.name,
-    sum(p.amount) as total_paid
-from users u
-join payments p on u.user_id = p.user_id
-group by u.name
-order by total_paid desc;
+    SUM(p.amount) AS total_paid
+FROM users u
+JOIN payments p ON u.user_id = p.user_id
+GROUP BY u.name
+ORDER BY total_paid DESC;
