@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+    
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+  <j:new className="com.example.SimpleFunctions" var="classHello" />
+
+  <p> ${classHello.hello("Myriam")}</p>
+   <p>Number 10 is:  ${classHello.checkEvenOrOdd(10)}</p>
+
+<p>hello</p>
+</j:jelly>
